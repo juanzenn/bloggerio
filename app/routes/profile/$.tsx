@@ -1,6 +1,9 @@
-import { RedirectToUserProfile } from "@clerk/remix";
-import React from "react";
+import { UserProfile } from "@clerk/remix";
 
 export default function $() {
-  return <RedirectToUserProfile />;
+  return (
+    <div className="flex w-full min-h-screen items-center justify-center bg-primary-900 py-12">
+      <UserProfile />
+    </div>
+  );
 }

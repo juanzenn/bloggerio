@@ -1,5 +1,9 @@
-import { RedirectToSignIn } from "@clerk/remix";
+import { SignIn } from "@clerk/remix";
 
 export default function SignInPage() {
-  return <RedirectToSignIn />;
+  return (
+    <div className="flex w-full h-screen items-center justify-center bg-primary-900">
+      <SignIn />
+    </div>
+  );
 }

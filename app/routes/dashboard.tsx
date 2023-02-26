@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async (args) => {
 export default function Dashboard() {
   return (
     <div>
-      <header>
+      <header className="flex items-center py-2 px-6 bg-gray-100 gap-4">
         <Link
           to="/"
           className="text-primary font-extrabold text-xl hover:underline"
@@ -27,7 +27,9 @@ export default function Dashboard() {
 
         <nav>This is my navigation</nav>
 
-        <UserButton />
+        <div className="ml-auto">
+          <UserButton />
+        </div>
       </header>
 
       <Outlet />
