@@ -1,6 +1,4 @@
-import { ClerkApp, ClerkCatchBoundary } from "@clerk/remix";
-import { rootAuthLoader } from "@clerk/remix/ssr.server";
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -13,11 +11,9 @@ import globalStyles from "./global.css";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "New Remix App",
+  title: "Bloggerio",
   viewport: "width=device-width,initial-scale=1",
 });
-
-export const loader: LoaderFunction = (args) => rootAuthLoader(args);
 
 export function links() {
   return [
@@ -57,17 +53,4 @@ function App() {
   );
 }
 
-export default ClerkApp(App);
-
-export const CatchBoundary = ClerkCatchBoundary();
-
-// export function ErrorBoundary({ error }) {
-//   return (
-//     <div>
-//       <h1>Error</h1>
-//       <p>{error.message}</p>
-//       <p>The stack trace is:</p>
-//       <pre>{error.stack}</pre>
-//     </div>
-//   );
-// }
+export default App;
