@@ -7,11 +7,11 @@ import { Link, Outlet } from "@remix-run/react";
 export const loader: LoaderFunction = async (args) => {
   const { sessionId } = await getAuth(args);
 
-  if (!sessionId) {
-    return redirect("/login");
-  }
+  // if (!sessionId) {
+  //   return redirect("/login");
+  // }
 
-  return {};
+  return null;
 };
 
 export default function Dashboard() {
