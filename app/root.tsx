@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -6,14 +6,36 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
+import { createClient } from "@supabase/supabase-js";
+import { useState } from "react";
 import globalStyles from "./global.css";
+
+import type { MetaFunction } from "@remix-run/node";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import type { Database } from "db_types";
+
+type TypedSupabaseClient = SupabaseClient;
+
+export type OutletContext = {
+  supabase: TypedSupabaseClient;
+};
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "Bloggerio",
   viewport: "width=device-width,initial-scale=1",
 });
+
+export const loader = async () => {
+  const env = {
+    SUPABASE_URL: process.env.SUPABASE_URL!,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY!,
+  };
+
+  return json({ env });
+};
 
 export function links() {
   return [
@@ -37,6 +59,12 @@ export function links() {
 }
 
 function App() {
+  const { env } = useLoaderData<typeof loader>();
+
+  const [supabase] = useState(() =>
+    createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
+  );
+
   return (
     <html lang="en">
       <head>
@@ -44,7 +72,7 @@ function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Outlet context={{ supabase }} />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
