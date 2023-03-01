@@ -13,14 +13,7 @@ import { useState } from "react";
 import globalStyles from "./global.css";
 
 import type { MetaFunction } from "@remix-run/node";
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "db_types";
-
-type TypedSupabaseClient = SupabaseClient;
-
-export type OutletContext = {
-  supabase: TypedSupabaseClient;
-};
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
