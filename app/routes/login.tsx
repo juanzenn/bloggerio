@@ -1,15 +1,37 @@
+import { redirect } from "@remix-run/node";
 import useOutletTypedContext from "hooks/useOutletContext";
 import { GitHub } from "react-feather";
+import supabaseServer from "utils/supabase.server";
+
+import type { LoaderArgs } from "@remix-run/node";
+import { useNavigate } from "@remix-run/react";
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const response = new Response();
+  const { data } = await supabaseServer({
+    request: request,
+    response,
+  }).auth.getSession();
+
+  if (data.session) {
+    return redirect("/dashboard");
+  }
+
+  return null;
+};
 
 export default function Index() {
+  const navigate = useNavigate();
   const { supabase } = useOutletTypedContext();
 
+  supabase.auth.onAuthStateChange((event, session) => {
+    if (session) navigate("/dashboard");
+  });
+
   const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "github",
     });
-
-    if (error) console.log("error", error);
   };
 
   return (

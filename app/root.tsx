@@ -8,11 +8,11 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { createClient } from "@supabase/supabase-js";
 import { useState } from "react";
 import globalStyles from "./global.css";
 
 import type { MetaFunction } from "@remix-run/node";
+import { createBrowserClient } from "@supabase/auth-helpers-remix";
 import type { Database } from "db_types";
 
 export const meta: MetaFunction = () => ({
@@ -55,7 +55,7 @@ function App() {
   const { env } = useLoaderData<typeof loader>();
 
   const [supabase] = useState(() =>
-    createClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
+    createBrowserClient<Database>(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
   );
 
   return (
