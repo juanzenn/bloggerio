@@ -24,7 +24,7 @@ export default function Index() {
   const navigate = useNavigate();
   const { supabase } = useOutletTypedContext();
 
-  supabase.auth.onAuthStateChange((event, session) => {
+  supabase.auth.onAuthStateChange((_, session) => {
     if (session) navigate("/dashboard");
   });
 
